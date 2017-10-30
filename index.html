@@ -12,7 +12,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'supercell-Magic-Font';
+            src: url('./fonts/Supercell-magic-webfont.ttf');
+        }
+        body{
+            font-family: supercell-Magic-Font;
 
+        }
+    </style>
 </head>
 
 <body>
@@ -79,6 +88,8 @@
 
 
     <script>
+        Chart.defaults.global.defaultFontFamily = 'supercell-Magic-Font';
+        Chart.defaults.global.defaultFontSize = 9;
         var clan;
         var clanlist;
         var playerlist;
