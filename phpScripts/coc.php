@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json; charset=UTF-8');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -8,7 +9,12 @@ $my_file = '../saved-data/clan-info.json';
 
 $clantag = "#2PCCRLYP";
 
+//deployment key
 $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImI5MzRmZTQxLTc5YjUtNDNmYi04YjJiLTA4ZGRkYjBlNzQzNyIsImlhdCI6MTUwOTA5MTQyNSwic3ViIjoiZGV2ZWxvcGVyL2UwMTcwNDEzLWZlNjQtYTg5OC03OTMwLWZlYTA4MjRmOTk5YyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM1LjE4Ni4xODkuMTc4Il0sInR5cGUiOiJjbGllbnQifV19.bm6Mi3JED8QNwrNMMQ74Bog2CUfFMm5LFXqj5BHO4_vEsXOKJ46g7pJN-8mR8oAWBUosX9pwczGQw2AJcwHWKQ";
+
+//test env key
+//$token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgyYjQzZDQwLTAyYzMtNDAxZC04MjIxLWY5NjA3ZTYxNTNlYyIsImlhdCI6MTUwOTMzMzc4MCwic3ViIjoiZGV2ZWxvcGVyL2UwMTcwNDEzLWZlNjQtYTg5OC03OTMwLWZlYTA4MjRmOTk5YyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE5Mi4xMjIuMTMxLjEzIl0sInR5cGUiOiJjbGllbnQifV19.cdJp9ZSYl6wYnR4xfPIX39c-VpsVfMUoBKMYmI-zcxUrx2fOAbktiv070MjyxoTYI4zLQUeDKQJ7KVdNqIFQ6w";
+
 
 $url_clan = "https://api.clashofclans.com/v1/clans/" . urlencode($clantag);
 
@@ -34,16 +40,34 @@ $count = count($clan_data_arr["memberList"]);
 //echo $count;
 for ($i = 0; $i < $count; $i++)
 {
-	$url_player = "https://api.clashofclans.com/v1/players/" . urlencode($clan_data_arr["memberList"][$i]["tag"]);
-	$ch2 = curl_init($url_player);
-	curl_setopt($ch2, CURLOPT_HTTPHEADER, $headr);
-	curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);
-	curl_setopt($ch2, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1); 
+	$dataIsOk = false;
+	$noOfTries = 0;
 
-	$res_player = curl_exec($ch2);
+	while($dataIsOk == false) 
+	{
+		$url_player = "https://api.clashofclans.com/v1/players/" . urlencode($clan_data_arr["memberList"][$i]["tag"]);
+		$ch2 = curl_init($url_player);
+		curl_setopt($ch2, CURLOPT_HTTPHEADER, $headr);
+		curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($ch2, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1); 
+
+		$res_player = curl_exec($ch2);
+		$result =  json_decode($res_player,true);
+		if ($result["reason"] == null) // check if data recieved is ok ( eg. {reason : "unknown exeception"})
+		{
+			$dataIsOk = true;
+		}
+		else
+		{
+			$noOfTries++;
+			if ($noOfTries > 3)
+			{
+				$dataIsOk = true; // skip after trying 3 times
+			}
+		}
+	}
 	array_push($clan_player_data_arr, json_decode($res_player));
-
 }
 
 include './currentdate.php';
