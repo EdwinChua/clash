@@ -1,10 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\fonts",
     "\\phpScripts",
     "\\saved-data",
     "\\scripts"
   ],
-  "SelectedNode": "\\index.html",
+  "SelectedNode": "\\saved-data\\clan-info.json",
   "PreviewInSolutionExplorer": false
 }
