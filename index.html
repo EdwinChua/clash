@@ -1,0 +1,242 @@
+﻿<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Night Warriors</title>
+    <link rel="icon" href="" id="icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img id="clan-emblem" />
+            </div>
+            <div class="col-md-8">
+                <h1 id="clan-name" style="position:relative; top:50%; transform: translateY(-50%); "></h1>
+            </div>
+        </div>
+
+        <h3>About Us</h3>
+        <div>
+            <h4>Location: <span id="clan-location"></span></h4>
+            
+        </div>
+        <div id="about-us">
+
+        </div>
+        <hr />
+        <h3>Donations</h3>
+        <canvas id="curr_donations" onmouseup="console.log('menu-' + this.id);" style="display: block; width: 1019px; height: 509px;" width="1019" height="509" class="chartjs-render-monitor"></canvas>
+        <canvas id="all_time_donations" onmouseup="console.log('menu-' + this.id);" style="display: block; width: 1019px; height: 509px;" width="1019" height="509" class="chartjs-render-monitor"></canvas>
+    </main>
+
+
+    <script>
+        var clan;
+        var clanlist;
+        var playerlist;
+        $(document).ready(function () {
+            $.when(
+                $.post("./phpScripts/return-saved-data.php", {}).done(function (rawdata0) {
+                    clan = rawdata0["clan"];
+                    clanlist = rawdata0["clan"]["memberList"];
+                    clanlist.sort(predicateBy('donations', 'descending'));
+
+                    playerlist = rawdata0["players"];
+
+                }),
+
+
+            ).then(function () {
+                $("#icon").attr('href', clan["badgeUrls"]["small"]);
+                $("#clan-emblem").attr('src', clan["badgeUrls"]["medium"]);
+
+                $('#about-us').html(clan["description"]);
+                $('#clan-name').html(clan["name"]);
+                $('#clan-location').html(clan["location"]["name"]);
+
+
+                var chartlabel_currentDonations = Array();
+                var chartdata_currentDonations = Array();
+                try {
+                    for (var i = 0; i < clanlist.length; i++) {
+                        if (clanlist[i]["donations"] > 0) {
+                            chartlabel_currentDonations.push(clanlist[i]["name"]);
+                            chartdata_currentDonations.push(clanlist[i]["donations"]);
+                        }
+                    }
+                } catch (err) {
+                    chartlabel_currentDonations.push("");
+                    chartdata_currentDonations.push("");
+                }
+                var ctx = document.getElementById("curr_donations").getContext('2d');
+                chart_currentDonations = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartlabel_currentDonations, // hardcoded to use the first dataset labels provided
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'Current Donations',
+                                data: chartdata_currentDonations,
+                                fill: true,
+                                backgroundColor: 'rgba(5, 50, 218, 0.85)',
+                                borderColor: 'rgba(5, 50, 218, 0.85)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Current Donations'
+                        },
+                        scales: {
+                            xAxes: [{
+
+                                ticks: {
+                                    beginAtZero: this.beginzero,
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+
+                    }
+                })
+
+                var chartlabel_all_time_Donations = Array();
+                var chartdata_all_time_Donations = Array();
+
+                try {
+                    for (var i = 0; i < playerlist.length; i++) {
+                        if (playerlist[i]["donations"] > 0) {
+                            chartlabel_all_time_Donations.push(playerlist[i]["name"]);
+                            chartdata_all_time_Donations.push(playerlist[i]["achievements"][14]["value"]);
+                        }
+                    }
+                } catch (err) {
+                    chartlabel_all_time_Donations.push("");
+                    chartdata_all_time_Donations.push("");
+                }
+
+
+                var ctx = document.getElementById("all_time_donations").getContext('2d');
+                chart_all_time_Donations = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartlabel_all_time_Donations, // hardcoded to use the first dataset labels provided
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'All Time Donations',
+                                data: chartdata_all_time_Donations,
+                                fill: true,
+                                backgroundColor: 'rgba(5, 50, 218, 0.85)',
+                                borderColor: 'rgba(5, 50, 218, 0.85)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'All-Time Donations'
+                        },
+                        scales: {
+                            xAxes: [{
+
+                                ticks: {
+                                    beginAtZero: this.beginzero,
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+
+                    }
+                })
+
+
+            })
+        })
+    </script>
+    <script>
+        //sort function
+        function predicateBy(prop, direction) {
+            return function (a, b) {
+                if (direction == "ascending") {
+                    if (parseFloat(a[prop]) > parseFloat(b[prop])) {
+                        return 1;
+                    } else if (parseFloat(a[prop]) < parseFloat(b[prop])) {
+                        return -1;
+                    }
+                    return 0;
+                }
+                else if (direction == "descending") {
+                    if (parseFloat(a[prop]) < parseFloat(b[prop])) {
+                        return 1;
+                    } else if (parseFloat(a[prop]) > parseFloat(b[prop])) {
+                        return -1;
+                    }
+                    return 0;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
