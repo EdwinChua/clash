@@ -145,6 +145,7 @@
 
         <div class="grid-row">
             <br>
+            <div style="float:right">Updated On: <span class="text-muted">{{updatedOn}}</span></div>
             <h4>About Us</h4>
             <div>
                 <h5>Location: <span style="color:rgb(34, 139, 69)">{{clan.location.name}}</span> </h5>
@@ -334,6 +335,7 @@
             $scope.selectedUser;
             $scope.data = [];
             $scope.clan;
+            $scope.updatedOn;
 
             var clan;
             var clanlist;
@@ -341,8 +343,8 @@
             $(document).ready(function () {
                 $.when(
                     $.post("./phpScripts/return-saved-data.php", {}).done(function (rawdata0) {
-                        clan = rawdata0["clan"];
-                        $scope.clan = clan;
+                        $scope.updatedOn = rawdata0['updatedOn'];
+                        $scope.clan = rawdata0["clan"];
                         clanlist = rawdata0["clan"]["memberList"];
                         clanlist.sort(predicateBy('donations', 'descending'));
                         playerlist = rawdata0["players"];
@@ -350,7 +352,7 @@
 
 
                 ).then(function () {
-                    $("#icon").attr('href', clan["badgeUrls"]["small"]);
+                    $("#icon").attr('href', $scope.clan["badgeUrls"]["small"]);
 
                     var chartlabel_currentDonations_temp = extractArray(clanlist,"name");
                     var chartdata_currentDonations_temp = extractArray(clanlist,"donations");
