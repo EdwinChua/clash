@@ -1,4 +1,4 @@
-# Clash Dashboard
+# Clash Dash
 
 Displays clan data in a graphical, easy to read form.
 
