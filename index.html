@@ -23,13 +23,15 @@
         html{
             width: 100%;
         }
+
+        /* Uncomment all (incl h4 h5 h6) to use supercell font instead */
         body{
-            font-family: supercell-Magic-Font;
-            font-size: 0.85rem;
+            /* font-family: supercell-Magic-Font; */
+            /* font-size: 0.85rem; */
             text-rendering: geometricPrecision;
             width: 100%;
         }
-        h4{
+        /* h4{
             font-size: 1.2rem;
             color: rgb(0, 10, 104);
         }
@@ -38,7 +40,7 @@
         }
         h6{
             font-size: 1rem;
-        }
+        } */
         .container-grid{
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -93,7 +95,7 @@
             }
             .footer-spacer {
                 width: 100%;
-                height: 60px;
+                height: 100px;
                 line-height: 60px;
             }
         }
@@ -180,16 +182,20 @@
             </div>
             <div style="font-size:1rem;">
                 <img ng-if="selectedUser.league" ng-src="{{selectedUser.league.iconUrls.small}}" height="50px" style="float:left"/>
-                <div>{{selectedUser.name}}</div>
+                <div><b>{{selectedUser.name}}</b></div>
                 <div>
-                    <h6 style="padding-left:50px; color:rgb(34, 139, 69)">{{selectedUser.role}}</h6>
+                    <!--This makes the first letter uppercase-->
+                    <h6 style="color:rgb(34, 139, 69)">{{selectedUser.role[0].toUpperCase() + selectedUser.role.substring(1)}}</h6>
                 </div>
                 <br>
             </div>
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-trohpies-tab" data-toggle="pill" href="#pills-trophies" role="tab" aria-controls="pills-trophies" aria-selected="true">Trophies</a>
+                    <a class="nav-link active" id="pills-gStats-tab" data-toggle="pill" href="#pills-gStats" role="tab" aria-controls="pills-gStats" aria-selected="true">General Stats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-trophies-tab" data-toggle="pill" href="#pills-trophies" role="tab" aria-controls="pills-trophies" aria-selected="false">Trophies</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="pills-achievements-tab" data-toggle="pill" href="#pills-achievements" role="tab" aria-controls="pills-achievements" aria-selected="false">Achievements</a>
@@ -202,7 +208,40 @@
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-trophies" role="tabpanel" aria-labelledby="pills-trohpies-tab">
+                <div class="tab-pane fade show active" id="pills-gStats" role="tabpanel" aria-labelledby="pills-gStats-tab">
+                    <div>
+                        Donation Ratio: 
+                        <span class="text-muted" ng-if="((selectedUser.donations != 0) && (selectedUser.donationsReceived!= 0))">{{Math.round((selectedUser.donations)/(selectedUser.donationsReceived) * 100) / 100 }}</span>
+                        <span class="text-muted" ng-if="!((selectedUser.donations != 0) && (selectedUser.donationsReceived!= 0))">Unable to calculate</span>
+                    </div>
+                    <canvas id="user_donations"></canvas>
+                    <div>
+                        <h4>Town Hall <span class="text-muted">TH {{selectedUser.townHallLevel}}</span></h4>
+                    </div>
+                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'home'">
+                        {{hero.name}}: <span class="text-muted">{{hero.level}}</span>
+                    </div>
+                    <div>
+                        War Stars: <span class="text-muted">{{selectedUser.warStars}}</span>
+                    </div>
+                    <div>
+                        Trophies: <span class="text-muted">{{selectedUser.trophies}}</span>
+                    </div>
+                    <hr>
+                    <div>
+                        <h4>Builder Base <span class="text-muted">BH {{selectedUser.builderHallLevel}}</span></h4>
+                    </div>
+                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'builderBase'">
+                        {{hero.name}}: <span class="text-muted">{{hero.level}}</span>
+                    </div>
+                    <div>
+                        Versus Battle Wins: <span class="text-muted">{{selectedUser.versusBattleWins}}</span>
+                    </div>
+                    <div>
+                        Versus Trophies <span class="text-muted">{{selectedUser.versusTrophies}}</span>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-trophies" role="tabpanel" aria-labelledby="pills-trophies-tab">
                         <canvas id="user_stats"></canvas>
                 </div>
                 <div class="tab-pane fade" id="pills-achievements" role="tabpanel" aria-labelledby="pills-achievements-tab">
@@ -241,12 +280,11 @@
                     <div ng-repeat="troop in selectedUser.troops">
                         <div ng-if="troop.village == 'home'">
                             <b>{{troop.name}}</b> <br>
-                            Current: {{troop.level}} / Max: {{troop.maxLevel}}
+                            Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%">
-                                        
-                                </div>
+                                <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%"></div>
                             </div>
+                            <br>
                         </div>
                     </div>
                     <hr>
@@ -254,7 +292,7 @@
                     <div ng-repeat="troop in selectedUser.troops">
                         <div ng-if="troop.village == 'builderBase'">
                             <b>{{troop.name}}</b> <br>
-                            Current: {{troop.level}} / Max: {{troop.maxLevel}}
+                            Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%">
                                         
@@ -268,28 +306,14 @@
                     <div ng-repeat="spell in selectedUser.spells">
                         <div ng-if="spell.village == 'home'">
                             <b>{{spell.name}}</b> <br>
-                            Current: {{spell.level}} / Max: {{spell.maxLevel}}
+                            Current Level: {{spell.level}} / Max: {{spell.maxLevel}}
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%">
-                                        
-                                </div>
+                                <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%"></div>
                             </div>
+                            <br>
                         </div>
                     </div>
                     <hr>
-                    <!--There are currently no Builder base spells -->
-                    <!-- <h6>Builder Base</h6>
-                    <div ng-repeat="spell in selectedUser.spells">
-                        <div ng-if="spell.village == 'builderBase'">
-                            <b>{{spell.name}}</b> <br>
-                            Current: {{spell.level}} / Max: {{spell.maxLevel}}
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%">
-                                        
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
@@ -304,7 +328,7 @@
         </div>
     </footer>
     
-
+    <!--Disclaimer Modal-->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -326,8 +350,9 @@
         </div>
     </div>
     <script>
-        Chart.defaults.global.defaultFontFamily = 'supercell-Magic-Font';
-        Chart.defaults.global.defaultFontSize = 9;
+        //uncomment these lines to use supercell font in charts
+        // Chart.defaults.global.defaultFontFamily = 'supercell-Magic-Font';
+        // Chart.defaults.global.defaultFontSize = 9;
 
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope) {
@@ -516,6 +541,7 @@
             });
             
             var chart_user_stats;
+            var chart_user_donations;
             $scope.changeUser = function(user){
                 $scope.selectedUser = user;
                 var ctx = document.getElementById("user_stats").getContext('2d');
@@ -565,7 +591,58 @@
                         }
 
                     }
-                })
+                });
+
+
+                console.log(user);
+                var ctx = document.getElementById("user_donations").getContext('2d');
+                if (chart_user_donations)
+                    chart_user_donations.destroy();
+
+                chart_user_donations = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Donations"],
+                        datasets: [
+                            {
+                                label: 'Donated',
+                                data: [user.donations],
+                                fill: true,
+                                backgroundColor: 'rgba(5, 50, 218, 0.85)',
+                                borderColor: 'rgba(5, 50, 218, 1)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Received',
+                                data: [user.donationsReceived],
+                                fill: true,
+                                backgroundColor: 'rgba(63, 191, 127, 0.85)',
+                                borderColor: 'rgba(63, 191, 127, 1)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Donations'
+                        },
+                        scales: {
+                            xAxes: [{
+
+                                ticks: {
+                                    beginAtZero: this.beginzero,
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+
+                    }
+                });
             }
 
             $scope.isCompleted = function(achievement){
