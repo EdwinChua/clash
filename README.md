@@ -11,6 +11,7 @@ See http://nightwarriors.crazy.technology for a sample set up.
  - Refactored code to utilize AngularJS instead of JQuery for updating elements on page
  - Charts now trim long player names
  - Current Donations chart now show Donations & Donations Received
+ - Added ability to click charts to navigate to user profile
 
 ### Bug Fixes in V2.0
  - Properly excluded inactive players from Current Donations chart

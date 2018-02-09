@@ -160,6 +160,7 @@
 
         <div class="grid-row-half_left">
             <h4>Donations</h4>
+            <h6>Try clicking on the charts!</h6>
             <div>
                 <canvas id="curr_donations"></canvas>
                 * Users with both 0 donations and received donations are excluded from this chart
@@ -218,28 +219,33 @@
                     <div>
                         <h4>Town Hall <span class="text-muted">TH {{selectedUser.townHallLevel}}</span></h4>
                     </div>
+                    <div>
+                        ⭐️War Stars: <span class="text-muted">{{selectedUser.warStars}}</span> 
+                    </div>
+                    <div>
+                        🏆 Trophies: <span class="text-muted">{{selectedUser.trophies}}</span>
+                    </div>
+                    <br>
+                    <h5>Heroes</h5>
                     <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'home'">
-                        {{hero.name}}: <span class="text-muted">{{hero.level}}</span>
-                    </div>
-                    <div>
-                        War Stars: <span class="text-muted">{{selectedUser.warStars}}</span>
-                    </div>
-                    <div>
-                        Trophies: <span class="text-muted">{{selectedUser.trophies}}</span>
+                        {{hero.name}}: <span class="text-muted">Lv {{hero.level}}</span>
                     </div>
                     <hr>
                     <div>
                         <h4>Builder Base <span class="text-muted">BH {{selectedUser.builderHallLevel}}</span></h4>
                     </div>
-                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'builderBase'">
-                        {{hero.name}}: <span class="text-muted">{{hero.level}}</span>
-                    </div>
                     <div>
                         Versus Battle Wins: <span class="text-muted">{{selectedUser.versusBattleWins}}</span>
                     </div>
                     <div>
-                        Versus Trophies <span class="text-muted">{{selectedUser.versusTrophies}}</span>
+                        🏆 Versus Trophies <span class="text-muted">{{selectedUser.versusTrophies}}</span>
                     </div>
+                    <br>
+                    <h5>Heroes</h5>
+                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'builderBase'">  
+                        {{hero.name}}: <span class="text-muted">Lv {{hero.level}} {{$index}}</span>
+                    </div>
+                    <hr>
                 </div>
                 <div class="tab-pane fade" id="pills-trophies" role="tabpanel" aria-labelledby="pills-trophies-tab">
                         <canvas id="user_stats"></canvas>
@@ -455,6 +461,15 @@
                                     }
                                 }
                             },
+                            onClick: function(c,i){
+                                try{
+                                    e = i[0];
+                                    $scope.changeUserFromChart(this.data.labels[e._index]);
+                                } catch (e){
+                                    console.log("click: not on bar");
+                                    //ignore misclicks
+                                }
+                            },
                         }
                     })
 
@@ -531,6 +546,15 @@
                                     }
                                 }
                             },
+                            onClick: function(c,i){
+                                try{
+                                    e = i[0];
+                                    $scope.changeUserFromChart(this.data.labels[e._index]);
+                                } catch (e){
+                                    console.log("click: not on bar");
+                                    //ignore misclicks
+                                }
+                            },
                         }
                     })
                     playerlist.sort(function(a, b){
@@ -540,13 +564,24 @@
                     });
                     $scope.data = playerlist;
                     $scope.changeUser(playerlist[0]);
-                    $scope.$digest();
+                    if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                        $scope.$digest();
+                    }
+
                     
                 })
             });
             
             var chart_user_stats;
             var chart_user_donations;
+
+            $scope.changeUserFromChart = function(userName){
+                var user = $scope.data.find(function(element) {
+                    return element.name==userName;
+                });
+                $scope.changeUser(user);
+            }
+
             $scope.changeUser = function(user){
                 $scope.selectedUser = user;
                 var ctx = document.getElementById("user_stats").getContext('2d');
@@ -563,7 +598,7 @@
                                 data: [user.trophies, user.versusTrophies],
                                 fill: true,
                                 backgroundColor: 'rgba(5, 200, 5, 0.85)',
-                                borderColor: 'rgba(5, 200, 5, 0.85)',
+                                borderColor: 'rgba(5, 200, 5, 1)',
                                 borderWidth: 2
                             },
                             {
@@ -571,7 +606,7 @@
                                 data: [user.bestTrophies, user.bestVersusTrophies],
                                 fill: true,
                                 backgroundColor: 'rgba(5, 50, 218, 0.85)',
-                                borderColor: 'rgba(5, 50, 218, 0.85)',
+                                borderColor: 'rgba(5, 50, 218, 1)',
                                 borderWidth: 2
                             }
                         ]
@@ -647,6 +682,9 @@
 
                     }
                 });
+                if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                    $scope.$digest();
+                }
             }
 
             $scope.isCompleted = function(achievement){
