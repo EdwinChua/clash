@@ -533,6 +533,11 @@
                             },
                         }
                     })
+                    playerlist.sort(function(a, b){
+                        if(a.name < b.name) return -1;
+                        if(a.name > b.name) return 1;
+                        return 0;
+                    });
                     $scope.data = playerlist;
                     $scope.changeUser(playerlist[0]);
                     $scope.$digest();
@@ -594,7 +599,6 @@
                 });
 
 
-                console.log(user);
                 var ctx = document.getElementById("user_donations").getContext('2d');
                 if (chart_user_donations)
                     chart_user_donations.destroy();
