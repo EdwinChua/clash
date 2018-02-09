@@ -3,30 +3,108 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Night Warriors</title>
     <link rel="icon" href="" id="icon">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <!-- AngularJS used to update player info -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4=" crossorigin="anonymous"></script>
+    <!--Required for bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--Required for chartJS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
     <style>
         @font-face {
             font-family: 'supercell-Magic-Font';
             src: url('./fonts/Supercell-magic-webfont.ttf');
         }
+        html{
+            width: 100%;
+        }
         body{
             font-family: supercell-Magic-Font;
-
+            font-size: 0.85rem;
+            text-rendering: geometricPrecision;
+            width: 100%;
         }
+        h4{
+            font-size: 1.2rem;
+            color: rgb(0, 10, 104);
+        }
+        h5{
+            font-size: 1.1rem;
+        }
+        h6{
+            font-size: 1rem;
+        }
+        .container-grid{
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-gap: 10px;
+            width: 100%;
+            max-width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        @media (min-width:320px)  {
+            .grid-row{
+                grid-column: 1 / span 12;
+            }
+            .grid-row-half_left{
+                grid-column: 1 / span 12;
+            }
+            .grid-row-half_right{
+                grid-column: 1 / span 12;
+            }
+            .footer {
+                width: 100%;
+                height: 80px;
+                line-height: 30px;
+                background-color: #f5f5f5;
+            }
+            .footer-spacer {
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+            }
+        }
+        @media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */ }
+        @media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
+        @media (min-width:801px)  {
+            .grid-row{
+                grid-column: 2 / span 10;
+            }
+            .grid-row-half_left{
+                grid-column: 2 / span 5;
+            }
+            .grid-row-half_right{
+                grid-column: 7 / span 5;
+            }
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+                background-color: #f5f5f5;
+            }
+            .footer-spacer {
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+            }
+        }
+        @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+        @media (min-width:1281px) { /* hi-res laptops and desktops */ }
     </style>
 </head>
 
-<body>
+<body  ng-app="myApp" ng-controller="myCtrl">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#"><img ng-src="{{clan.badgeUrls.medium}}" height="35px"/><span>{{clan.name}}</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -36,7 +114,8 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <!-- KIV this
+                    <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -52,91 +131,411 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
+                </li> -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search (disabled)" aria-label="Search" disabled>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
             </form>
         </div>
     </nav>
 
 
-    <main class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <img id="clan-emblem" />
+    <main class="container-grid">
+
+        <div class="grid-row">
+            <br>
+            <h4>About Us</h4>
+            <div>
+                <h5>Location: <span style="color:rgb(34, 139, 69)">{{clan.location.name}}</span> </h5>
+                {{clan.description}}
             </div>
-            <div class="col-md-8">
-                <h1 id="clan-name" style="position:relative; top:50%; transform: translateY(-50%); "></h1>
-            </div>
+            <hr />
         </div>
 
-        <h3>About Us</h3>
-        <div>
-            <h4>Location: <span id="clan-location"></span></h4>
-            
+
+
+        <div class="grid-row-half_left">
+            <h4>Donations</h4>
+            <div>
+                <canvas id="curr_donations"></canvas>
+                * Users with both 0 donations and received donations are excluded from this chart
+            </div>
+            <hr>
+            <div>
+                <canvas id="all_time_donations"></canvas>
+            </div>   
         </div>
-        <div id="about-us">
+
+        
+        <div class="grid-row-half_right">
+            <h4>Individual Player Stats</h4>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect_player">Clan members</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect_player" selectpicker data-live-search="true" ng-model="selectedUser" ng-options="user as user.name for user in data"  ng-change="changeUser(selectedUser)" >
+                </select>
+            </div>
+            <div style="font-size:1rem;">
+                <img ng-if="selectedUser.league" ng-src="{{selectedUser.league.iconUrls.small}}" height="50px" style="float:left"/>
+                <div>{{selectedUser.name}}</div>
+                <div>
+                    <h6 style="padding-left:50px; color:rgb(34, 139, 69)">{{selectedUser.role}}</h6>
+                </div>
+                <br>
+            </div>
+
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-trohpies-tab" data-toggle="pill" href="#pills-trophies" role="tab" aria-controls="pills-trophies" aria-selected="true">Trophies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-achievements-tab" data-toggle="pill" href="#pills-achievements" role="tab" aria-controls="pills-achievements" aria-selected="false">Achievements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-troops-tab" data-toggle="pill" href="#pills-troops" role="tab" aria-controls="pills-troops" aria-selected="false">Troops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-spells-tab" data-toggle="pill" href="#pills-spells" role="tab" aria-controls="pills-spells" aria-selected="false">Spells</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-trophies" role="tabpanel" aria-labelledby="pills-trohpies-tab">
+                        <canvas id="user_stats"></canvas>
+                </div>
+                <div class="tab-pane fade" id="pills-achievements" role="tabpanel" aria-labelledby="pills-achievements-tab">
+                        <h6>Incomplete Achievements</h6>
+                        <div ng-repeat="achievment in selectedUser.achievements">
+                            <div ng-if="!isCompleted(achievment)">
+                                <b>{{achievment.name}}</b>
+                                <br>
+                                {{achievment.info}}
+                                <div class="progress">
+                                    <div class="progress-bar" ng-class="{'bg-danger': achievment.value/achievment.target*100 < 25, 'bg-warning': achievment.value/achievment.target*100 > 75}" role="progressbar" style="width:{{achievment.value/achievment.target*100}}%">
+                                            {{ Math.round(achievment.value/achievment.target*100) }}%
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6>Completed Achievements</h6>
+                        <div ng-repeat="achievment in selectedUser.achievements">
+                            <div ng-if="!isCompleted(achievment)">
+                                <b>{{achievment.name}}</b>
+                                <br>
+                                {{achievment.info}}
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width:100%">
+                                            100%
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                </div>
+                <div class="tab-pane fade" id="pills-troops" role="tabpanel" aria-labelledby="pills-troops-tab">
+                    <h6>Home Village</h6>
+                    <div ng-repeat="troop in selectedUser.troops">
+                        <div ng-if="troop.village == 'home'">
+                            <b>{{troop.name}}</b> <br>
+                            Current: {{troop.level}} / Max: {{troop.maxLevel}}
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%">
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>Builder Base</h6>
+                    <div ng-repeat="troop in selectedUser.troops">
+                        <div ng-if="troop.village == 'builderBase'">
+                            <b>{{troop.name}}</b> <br>
+                            Current: {{troop.level}} / Max: {{troop.maxLevel}}
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%">
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-spells" role="tabpanel" aria-labelledby="pills-spells-tab">
+                    <h6>Home Village</h6>
+                    <div ng-repeat="spell in selectedUser.spells">
+                        <div ng-if="spell.village == 'home'">
+                            <b>{{spell.name}}</b> <br>
+                            Current: {{spell.level}} / Max: {{spell.maxLevel}}
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%">
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!--There are currently no Builder base spells -->
+                    <!-- <h6>Builder Base</h6>
+                    <div ng-repeat="spell in selectedUser.spells">
+                        <div ng-if="spell.village == 'builderBase'">
+                            <b>{{spell.name}}</b> <br>
+                            Current: {{spell.level}} / Max: {{spell.maxLevel}}
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%">
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
 
         </div>
-        <hr />
-        <h3>Donations</h3>
-        <canvas id="curr_donations" onmouseup="console.log('menu-' + this.id);" style="display: block; width: 1019px; height: 509px;" width="1019" height="509" class="chartjs-render-monitor"></canvas>
-        <canvas id="all_time_donations" onmouseup="console.log('menu-' + this.id);" style="display: block; width: 1019px; height: 509px;" width="1019" height="509" class="chartjs-render-monitor"></canvas>
+        <br>
     </main>
+    <div class="footer-spacer"></div>
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Clan Viewer v2.0 - View this project on <a href="https://github.com/EdwinChua/clash">Github</a></span>
+            <span style="float:right"><button type="button" class="btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg" >Disclaimer</button></span>
+        </div>
+    </footer>
+    
 
-
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Disclaimer (From SuperCell)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">
+                        This content is not affiliated with, endorsed, sponsored, or 
+                        specifically approved by Supercell and Supercell is not responsible for it. 
+                        For more information see Supercell's Fan Content Policy: 
+                        <a href="http://www.supercell.com/fan-content-policy">www.supercell.com/fan-content-policy</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         Chart.defaults.global.defaultFontFamily = 'supercell-Magic-Font';
         Chart.defaults.global.defaultFontSize = 9;
-        var clan;
-        var clanlist;
-        var playerlist;
-        $(document).ready(function () {
-            $.when(
-                $.post("./phpScripts/return-saved-data.php", {}).done(function (rawdata0) {
-                    clan = rawdata0["clan"];
-                    clanlist = rawdata0["clan"]["memberList"];
-                    clanlist.sort(predicateBy('donations', 'descending'));
 
-                    playerlist = rawdata0["players"];
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.Math = window.Math;
+            $scope.selectedUser;
+            $scope.data = [];
+            $scope.clan;
 
-                }),
-
-
-            ).then(function () {
-                $("#icon").attr('href', clan["badgeUrls"]["small"]);
-                $("#clan-emblem").attr('src', clan["badgeUrls"]["medium"]);
-
-                $('#about-us').html(clan["description"]);
-                $('#clan-name').html(clan["name"]);
-                $('#clan-location').html(clan["location"]["name"]);
+            var clan;
+            var clanlist;
+            var playerlist;
+            $(document).ready(function () {
+                $.when(
+                    $.post("./phpScripts/return-saved-data.php", {}).done(function (rawdata0) {
+                        clan = rawdata0["clan"];
+                        $scope.clan = clan;
+                        clanlist = rawdata0["clan"]["memberList"];
+                        clanlist.sort(predicateBy('donations', 'descending'));
+                        playerlist = rawdata0["players"];
+                    }),
 
 
-                var chartlabel_currentDonations = Array();
-                var chartdata_currentDonations = Array();
-                try {
-                    for (var i = 0; i < clanlist.length; i++) {
-                        if (clanlist[i]["donations"] > 0) {
-                            chartlabel_currentDonations.push(clanlist[i]["name"]);
-                            chartdata_currentDonations.push(clanlist[i]["donations"]);
+                ).then(function () {
+                    $("#icon").attr('href', clan["badgeUrls"]["small"]);
+
+                    var chartlabel_currentDonations_temp = extractArray(clanlist,"name");
+                    var chartdata_currentDonations_temp = extractArray(clanlist,"donations");
+                    var chartdata_currentDonationsReceived_temp = extractArray(clanlist,"donationsReceived");
+
+                    var chartlabel_currentDonations = [];
+                    var chartdata_currentDonations = [];
+                    var chartdata_currentDonationsReceived = [];
+                    
+                    for (var i in chartlabel_currentDonations_temp){
+                        if (!(chartdata_currentDonations_temp[i] == 0 && chartdata_currentDonationsReceived_temp[i]==0)){
+                            chartlabel_currentDonations.push(chartlabel_currentDonations_temp[i]);
+                            chartdata_currentDonations.push(chartdata_currentDonations_temp[i]);
+                            chartdata_currentDonationsReceived.push(chartdata_currentDonationsReceived_temp[i]);
                         }
                     }
-                } catch (err) {
-                    chartlabel_currentDonations.push("");
-                    chartdata_currentDonations.push("");
-                }
-                var ctx = document.getElementById("curr_donations").getContext('2d');
-                chart_currentDonations = new Chart(ctx, {
+
+                    var ctx = document.getElementById("curr_donations").getContext('2d');
+                    chart_currentDonations = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: chartlabel_currentDonations,
+                            datasets: [
+                                {
+                                    label: 'Donated',
+                                    data: chartdata_currentDonations,
+                                    fill: true,
+                                    backgroundColor: 'rgba(5, 50, 218, 0.85)',
+                                    borderColor: 'rgba(5, 50, 218, 1)',
+                                    borderWidth: 2
+                                },
+                                {
+                                    label: 'Received',
+                                    data: chartdata_currentDonationsReceived,
+                                    fill: true,
+                                    backgroundColor: 'rgba(63, 191, 127, 0.85)',
+                                    borderColor: 'rgba(63, 191, 127, 1)',
+                                    borderWidth: 2
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'Current Donations *'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: this.beginzero,
+                                        callback: function(value) {
+                                            if (value.length <=10)
+                                                return value;
+                                            else 
+                                                return value.substr(0, 7) + "...";//truncate
+                                        }
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                enabled: true,
+                                mode: 'label',
+                                callbacks: {
+                                    title: function(tooltipItems, data) {
+                                        var idx = tooltipItems[0].index;
+                                        return data.labels[idx];
+                                    },
+                                    label: function(tooltipItems, data) {
+                                        return data.datasets[tooltipItems.datasetIndex].label + ": "+ tooltipItems.yLabel;
+                                    }
+                                }
+                            },
+                        }
+                    })
+
+                    var all_time_DonationsArr = [];
+
+                    try {
+                        for (var i = 0; i < playerlist.length; i++) {
+                            if (playerlist[i]["achievements"][14]["value"] > 0) {
+                                var all_time_Donations = {
+                                    name: playerlist[i]["name"],
+                                    donation: playerlist[i]["achievements"][14]["value"]
+                                }
+                                all_time_DonationsArr.push(all_time_Donations);
+                            }
+                        }
+                    } catch (err) {
+                        all_time_DonationsArr.push("");
+                    }
+                    all_time_DonationsArr.sort(predicateBy("donation","descending"));
+
+                    var chartlabel_all_time_Donations = extractArray(all_time_DonationsArr,"name");
+                    var chartdata_all_time_Donations = extractArray(all_time_DonationsArr,"donation");
+
+                    var ctx = document.getElementById("all_time_donations").getContext('2d');
+                    chart_all_time_Donations = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: chartlabel_all_time_Donations,
+                            datasets: [
+                                {
+                                    label: 'Donations',
+                                    data: chartdata_all_time_Donations,
+                                    fill: true,
+                                    backgroundColor: 'rgba(5, 50, 218, 0.85)',
+                                    borderColor: 'rgba(5, 50, 218, 1)',
+                                    borderWidth: 2
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'All-Time Donations'
+                            },
+                            scales: {
+                                xAxes: [{
+
+                                    ticks: {
+                                        beginAtZero: this.beginzero,
+                                        callback: function(value) {
+                                            if (value.length <=10)
+                                                return value;
+                                            else 
+                                                return value.substr(0, 7) + "...";//truncate
+                                        }
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                enabled: true,
+                                mode: 'label',
+                                callbacks: {
+                                    title: function(tooltipItems, data) {
+                                        var idx = tooltipItems[0].index;
+                                        return data.labels[idx];
+                                    },
+                                    label: function(tooltipItems, data) {
+                                        return data.datasets[tooltipItems.datasetIndex].label + ": "+ tooltipItems.yLabel;
+                                    }
+                                }
+                            },
+                        }
+                    })
+                    $scope.data = playerlist;
+                    $scope.changeUser(playerlist[0]);
+                    $scope.$digest();
+                    
+                })
+            });
+            
+            var chart_user_stats;
+            $scope.changeUser = function(user){
+                $scope.selectedUser = user;
+                var ctx = document.getElementById("user_stats").getContext('2d');
+                if (chart_user_stats)
+                    chart_user_stats.destroy();
+
+                chart_user_stats = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: chartlabel_currentDonations, // hardcoded to use the first dataset labels provided
+                        labels: ["Trophies","Versus Trophies"],
                         datasets: [
                             {
-                                type: 'bar',
-                                label: 'Current Donations',
-                                data: chartdata_currentDonations,
+                                label: 'Current',
+                                data: [user.trophies, user.versusTrophies],
+                                fill: true,
+                                backgroundColor: 'rgba(5, 200, 5, 0.85)',
+                                borderColor: 'rgba(5, 200, 5, 0.85)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Best',
+                                data: [user.bestTrophies, user.bestVersusTrophies],
                                 fill: true,
                                 backgroundColor: 'rgba(5, 50, 218, 0.85)',
                                 borderColor: 'rgba(5, 50, 218, 0.85)',
@@ -147,7 +546,7 @@
                     options: {
                         title: {
                             display: true,
-                            text: 'Current Donations'
+                            text: 'Trophy and Versus Trophies'
                         },
                         scales: {
                             xAxes: [{
@@ -165,65 +564,24 @@
 
                     }
                 })
+            }
 
-                var chartlabel_all_time_Donations = Array();
-                var chartdata_all_time_Donations = Array();
+            $scope.isCompleted = function(achievement){
+                return achievement.value >= achievement.target;
+            }
 
-                try {
-                    for (var i = 0; i < playerlist.length; i++) {
-                        if (playerlist[i]["achievements"][14]["value"] > 0) {
-                            chartlabel_all_time_Donations.push(playerlist[i]["name"]);
-                            chartdata_all_time_Donations.push(playerlist[i]["achievements"][14]["value"]);
-                        }
+            function extractArray(array,string){
+                var returnArray = [];
+                for (var i in array){
+                    try{
+                    returnArray.push(array[i][string]);
+                    }catch(e){
+                        returnArray.push("");
                     }
-                } catch (err) {
-                    chartlabel_all_time_Donations.push("");
-                    chartdata_all_time_Donations.push("");
                 }
-
-
-                var ctx = document.getElementById("all_time_donations").getContext('2d');
-                chart_all_time_Donations = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: chartlabel_all_time_Donations, // hardcoded to use the first dataset labels provided
-                        datasets: [
-                            {
-                                type: 'bar',
-                                label: 'All Time Donations',
-                                data: chartdata_all_time_Donations,
-                                fill: true,
-                                backgroundColor: 'rgba(5, 50, 218, 0.85)',
-                                borderColor: 'rgba(5, 50, 218, 0.85)',
-                                borderWidth: 2
-                            }
-                        ]
-                    },
-                    options: {
-                        title: {
-                            display: true,
-                            text: 'All-Time Donations'
-                        },
-                        scales: {
-                            xAxes: [{
-
-                                ticks: {
-                                    beginAtZero: this.beginzero,
-                                }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-
-                    }
-                })
-
-
-            })
-        })
+                return returnArray;
+            }
+        });
     </script>
     <script>
         //sort function
