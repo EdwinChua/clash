@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Night Warriors</title>
     <link rel="icon" href="" id="icon">
+
     <!-- AngularJS used to update player info -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4=" crossorigin="anonymous"></script>
+
     <!--Required for bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
     <!--Required for chartJS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+
     <style>
         @font-face {
             font-family: 'supercell-Magic-Font';
@@ -104,7 +108,7 @@
     </style>
 </head>
 
-<body  ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrl">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#"><img ng-src="{{clan.badgeUrls.medium}}" height="35px"/><span>{{clan.name}}</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +151,7 @@
 
         <div class="grid-row">
             <br>
-            <div style="float:right">Updated On: <span class="text-muted">{{updatedOn}} (+8 GMT)</span></div>
+            <div style="float:right">Updated On: <span class="text-muted">{{updatedOn}}</span></div>
             <h4>About Us</h4>
             <div>
                 <h5>Location: <span style="color:rgb(34, 139, 69)">{{clan.location.name}}</span> </h5>
@@ -155,7 +159,6 @@
             </div>
             <hr />
         </div>
-
 
 
         <div class="grid-row-half_left">
@@ -251,35 +254,35 @@
                         <canvas id="user_stats"></canvas>
                 </div>
                 <div class="tab-pane fade" id="pills-achievements" role="tabpanel" aria-labelledby="pills-achievements-tab">
-                        <h6>Incomplete Achievements</h6>
-                        <div ng-repeat="achievment in selectedUser.achievements">
-                            <div ng-if="!isCompleted(achievment)">
-                                <b>{{achievment.name}}</b>
-                                <br>
-                                {{achievment.info}}
-                                <div class="progress">
-                                    <div class="progress-bar" ng-class="{'bg-danger': achievment.value/achievment.target*100 < 25, 'bg-warning': achievment.value/achievment.target*100 > 75}" role="progressbar" style="width:{{achievment.value/achievment.target*100}}%">
-                                            {{ Math.round(achievment.value/achievment.target*100) }}%
-                                    </div>
+                    <h6>Incomplete Achievements</h6>
+                    <div ng-repeat="achievment in selectedUser.achievements">
+                        <div ng-if="!isCompleted(achievment)">
+                            <b>{{achievment.name}}</b>
+                            <br>
+                            {{achievment.info}}
+                            <div class="progress">
+                                <div class="progress-bar" ng-class="{'bg-danger': achievment.value/achievment.target*100 < 25, 'bg-warning': achievment.value/achievment.target*100 > 75}" role="progressbar" style="width:{{achievment.value/achievment.target*100}}%">
+                                    {{ Math.round(achievment.value/achievment.target*100) }}%
                                 </div>
-                                <br>
                             </div>
+                            <br>
                         </div>
-                        <hr>
-                        <h6>Completed Achievements</h6>
-                        <div ng-repeat="achievment in selectedUser.achievements">
-                            <div ng-if="!isCompleted(achievment)">
-                                <b>{{achievment.name}}</b>
-                                <br>
-                                {{achievment.info}}
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width:100%">
-                                            100%
-                                    </div>
+                    </div>
+                    <hr>
+                    <h6>Completed Achievements</h6>
+                    <div ng-repeat="achievment in selectedUser.achievements">
+                        <div ng-if="!isCompleted(achievment)">
+                            <b>{{achievment.name}}</b>
+                            <br>
+                            {{achievment.info}}
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width:100%">
+                                    100%
                                 </div>
-                                <br>
                             </div>
+                            <br>
                         </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="pills-troops" role="tabpanel" aria-labelledby="pills-troops-tab">
                     <h6>Home Village</h6>
@@ -349,7 +352,7 @@
                         This content is not affiliated with, endorsed, sponsored, or 
                         specifically approved by Supercell and Supercell is not responsible for it. 
                         For more information see Supercell's Fan Content Policy: 
-                        <a href="http://www.supercell.com/fan-content-policy">www.supercell.com/fan-content-policy</a>.
+                        <a href="http://supercell.com/fan-content-policy">supercell.com/fan-content-policy</a>.
                     </p>
                 </div>
             </div>
@@ -360,21 +363,21 @@
         // Chart.defaults.global.defaultFontFamily = 'supercell-Magic-Font';
         // Chart.defaults.global.defaultFontSize = 9;
 
-        var app = angular.module('myApp', []);
+        let app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope) {
             $scope.Math = window.Math;
-            $scope.selectedUser;
+            $scope.selectedUser = "";
             $scope.data = [];
-            $scope.clan;
-            $scope.updatedOn;
+            $scope.clan = "";
+            $scope.updatedOn = "";
 
-            var clan;
-            var clanlist;
-            var playerlist;
+            let clan;
+            let clanlist;
+            let playerlist;
             $(document).ready(function () {
                 $.when(
-                    $.post("./phpScripts/return-saved-data.php", {}).done(function (rawdata0) {
-                        $scope.updatedOn = rawdata0['updatedOn'];
+                    $.get("./data/clan-info.json", {}).done(function (rawdata0) {
+                        $scope.updatedOn = Date(rawdata0['updatedOn']);
                         $scope.clan = rawdata0["clan"];
                         clanlist = rawdata0["clan"]["memberList"];
                         clanlist.sort(predicateBy('donations', 'descending'));
@@ -385,24 +388,24 @@
                 ).then(function () {
                     $("#icon").attr('href', $scope.clan["badgeUrls"]["small"]);
 
-                    var chartlabel_currentDonations_temp = extractArray(clanlist,"name");
-                    var chartdata_currentDonations_temp = extractArray(clanlist,"donations");
-                    var chartdata_currentDonationsReceived_temp = extractArray(clanlist,"donationsReceived");
+                    let chartlabel_currentDonations_temp = extractArray(clanlist,"name");
+                    let chartdata_currentDonations_temp = extractArray(clanlist,"donations");
+                    let chartdata_currentDonationsReceived_temp = extractArray(clanlist,"donationsReceived");
 
-                    var chartlabel_currentDonations = [];
-                    var chartdata_currentDonations = [];
-                    var chartdata_currentDonationsReceived = [];
+                    let chartlabel_currentDonations = [];
+                    let chartdata_currentDonations = [];
+                    let chartdata_currentDonationsReceived = [];
                     
-                    for (var i in chartlabel_currentDonations_temp){
-                        if (!(chartdata_currentDonations_temp[i] == 0 && chartdata_currentDonationsReceived_temp[i]==0)){
+                    for (let i in chartlabel_currentDonations_temp){
+                        if (!(chartdata_currentDonations_temp[i] === 0 && chartdata_currentDonationsReceived_temp[i] === 0)){
                             chartlabel_currentDonations.push(chartlabel_currentDonations_temp[i]);
                             chartdata_currentDonations.push(chartdata_currentDonations_temp[i]);
                             chartdata_currentDonationsReceived.push(chartdata_currentDonationsReceived_temp[i]);
                         }
                     }
 
-                    var ctx = document.getElementById("curr_donations").getContext('2d');
-                    chart_currentDonations = new Chart(ctx, {
+                    let ctxCurrDonations = document.getElementById("curr_donations").getContext('2d');
+                    chart_currentDonations = new Chart(ctxCurrDonations, {
                         type: 'bar',
                         data: {
                             labels: chartlabel_currentDonations,
@@ -453,7 +456,7 @@
                                 mode: 'label',
                                 callbacks: {
                                     title: function(tooltipItems, data) {
-                                        var idx = tooltipItems[0].index;
+                                        let idx = tooltipItems[0].index;
                                         return data.labels[idx];
                                     },
                                     label: function(tooltipItems, data) {
@@ -471,17 +474,17 @@
                                 }
                             },
                         }
-                    })
+                    });
 
-                    var all_time_DonationsArr = [];
+                    let all_time_DonationsArr = [];
 
                     try {
-                        for (var i = 0; i < playerlist.length; i++) {
+                        for (let i = 0; i < playerlist.length; i++) {
                             if (playerlist[i]["achievements"][14]["value"] > 0) {
-                                var all_time_Donations = {
+                                let all_time_Donations = {
                                     name: playerlist[i]["name"],
                                     donation: playerlist[i]["achievements"][14]["value"]
-                                }
+                                };
                                 all_time_DonationsArr.push(all_time_Donations);
                             }
                         }
@@ -490,11 +493,11 @@
                     }
                     all_time_DonationsArr.sort(predicateBy("donation","descending"));
 
-                    var chartlabel_all_time_Donations = extractArray(all_time_DonationsArr,"name");
-                    var chartdata_all_time_Donations = extractArray(all_time_DonationsArr,"donation");
+                    let chartlabel_all_time_Donations = extractArray(all_time_DonationsArr,"name");
+                    let chartdata_all_time_Donations = extractArray(all_time_DonationsArr,"donation");
 
-                    var ctx = document.getElementById("all_time_donations").getContext('2d');
-                    chart_all_time_Donations = new Chart(ctx, {
+                    let ctxAllTimeDonations = document.getElementById("all_time_donations").getContext('2d');
+                    chart_all_time_Donations = new Chart(ctxAllTimeDonations, {
                         type: 'bar',
                         data: {
                             labels: chartlabel_all_time_Donations,
@@ -538,7 +541,7 @@
                                 mode: 'label',
                                 callbacks: {
                                     title: function(tooltipItems, data) {
-                                        var idx = tooltipItems[0].index;
+                                        let idx = tooltipItems[0].index;
                                         return data.labels[idx];
                                     },
                                     label: function(tooltipItems, data) {
@@ -556,7 +559,7 @@
                                 }
                             },
                         }
-                    })
+                    });
                     playerlist.sort(function(a, b){
                         if(a.name < b.name) return -1;
                         if(a.name > b.name) return 1;
@@ -564,7 +567,7 @@
                     });
                     $scope.data = playerlist;
                     $scope.changeUser(playerlist[0]);
-                    if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                    if ($scope.$root.$$phase !== '$apply' && $scope.$root.$$phase !== '$digest') {
                         $scope.$digest();
                     }
 
@@ -572,23 +575,23 @@
                 })
             });
             
-            var chart_user_stats;
-            var chart_user_donations;
+            let chart_user_stats;
+            let chart_user_donations;
 
             $scope.changeUserFromChart = function(userName){
-                var user = $scope.data.find(function(element) {
-                    return element.name==userName;
+                let user = $scope.data.find(function(element) {
+                    return element.name === userName;
                 });
                 $scope.changeUser(user);
-            }
+            };
 
             $scope.changeUser = function(user){
                 $scope.selectedUser = user;
-                var ctx = document.getElementById("user_stats").getContext('2d');
+                let ctxUserStats = document.getElementById("user_stats").getContext('2d');
                 if (chart_user_stats)
                     chart_user_stats.destroy();
 
-                chart_user_stats = new Chart(ctx, {
+                chart_user_stats = new Chart(ctxUserStats, {
                     type: 'bar',
                     data: {
                         labels: ["Trophies","Versus Trophies"],
@@ -618,7 +621,6 @@
                         },
                         scales: {
                             xAxes: [{
-
                                 ticks: {
                                     beginAtZero: this.beginzero,
                                 }
@@ -629,16 +631,15 @@
                                 }
                             }]
                         }
-
                     }
                 });
 
 
-                var ctx = document.getElementById("user_donations").getContext('2d');
+                let ctxUserDonations = document.getElementById("user_donations").getContext('2d');
                 if (chart_user_donations)
                     chart_user_donations.destroy();
 
-                chart_user_donations = new Chart(ctx, {
+                chart_user_donations = new Chart(ctxUserDonations, {
                     type: 'bar',
                     data: {
                         labels: ["Donations"],
@@ -682,18 +683,18 @@
 
                     }
                 });
-                if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                if ($scope.$root.$$phase !== '$apply' && $scope.$root.$$phase !== '$digest') {
                     $scope.$digest();
                 }
-            }
+            };
 
             $scope.isCompleted = function(achievement){
                 return achievement.value >= achievement.target;
-            }
+            };
 
             function extractArray(array,string){
-                var returnArray = [];
-                for (var i in array){
+                let returnArray = [];
+                for (let i in array){
                     try{
                     returnArray.push(array[i][string]);
                     }catch(e){
@@ -708,7 +709,7 @@
         //sort function
         function predicateBy(prop, direction) {
             return function (a, b) {
-                if (direction == "ascending") {
+                if (direction === "ascending") {
                     if (parseFloat(a[prop]) > parseFloat(b[prop])) {
                         return 1;
                     } else if (parseFloat(a[prop]) < parseFloat(b[prop])) {
@@ -716,7 +717,7 @@
                     }
                     return 0;
                 }
-                else if (direction == "descending") {
+                else if (direction === "descending") {
                     if (parseFloat(a[prop]) < parseFloat(b[prop])) {
                         return 1;
                     } else if (parseFloat(a[prop]) > parseFloat(b[prop])) {

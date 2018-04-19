@@ -19,33 +19,25 @@ See http://nightwarriors.crazy.technology for a sample set up.
 
 ## Project Setup
 
-### scripts/cron.sh 
-Runs [coc.php](https://github.com/EdwinChua/clash/blob/master/phpScripts/coc.php) to get a specific clan's info.
+### src/config.php
+Replace the clantag via the `$clantag` variable. Replace `$token` with a valid token obtained from https://developer.clashofclans.com/ 
 
-1. Change `cd /var/www/nightwarriors/phpScripts` to the appropriate folder (the path should look like `/var/www/<your folder here>/phpScripts`
-2. Set up a cron job to schedule the api calls periodically
+### src/cron.sh
+Runs [update.php](https://github.com/EdwinChua/clash/blob/master/phpScripts/coc.php) to get a specific clan's info.
 
-### phpScripts/coc.php
-Get's clan info via clan tag specified by `$clantag` variable. Replace `$token` with your valid token. 
+1. Set up a cron job to schedule the api calls periodically
+2. Enjoy
 
-This script saves a file saved-data/clan-info.json, containing 3 items:
- - Date and time script was run
+### src/update.php
+
+This script saves a file data/clan-info.json, containing 3 items:
+ - Timestamp when script was run
  - Clan info
  - Full profile for each player in the clan
-
 
 Note: This will result in ~50 API calls each time this script is run, which is why I do not call it directly on page load. 
  (1) It's slow. 
  (2) Your API calls may be blocked if called too frequently.
-
-#### includes phpScripts/currentdate.php
-This file provides a way to save the time the API calls were made. (For verification that your cron job is running as scheduled)
-
-The default timezone in phpScripts/currentdate.php is Singapore. If you'd like to change it, here are the supported timezones in php:
-https://secure.php.net/manual/en/timezones.php
-
-### phpScripts/return-saved-data.php
-Responds with the saved-data/clan-info.json. Modify to suit your needs
 
 ## Additional Info
 
