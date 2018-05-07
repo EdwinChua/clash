@@ -47,7 +47,8 @@ Like my work? Buy me a beer: paypal.me/edwinchuatech
  - Removed the retry loop
  - Split config in separate file
  - Removed the API key from git (saw that its a base64 encoded JSON Web Token, best practice is to not include credentials publicly)
- Thanks for this update @Jimbolino
+
+Thanks for this update @Jimbolino
 
 ## Update to V2.0 (9 Feb 2018)
  - Upgraded from Bootstrap v4.0.0 beta to Bootstrap v 4.0.0
