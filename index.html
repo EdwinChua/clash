@@ -377,7 +377,7 @@
             $(document).ready(function () {
                 $.when(
                     $.get("./data/clan-info.json", {}).done(function (rawdata0) {
-                        $scope.updatedOn = new Date(rawdata0['updatedOn'] * 1000);
+                        $scope.updatedOn = (new Date(rawdata0['updatedOn'] * 1000)).toString();
                         $scope.clan = rawdata0["clan"];
                         clanlist = rawdata0["clan"]["memberList"];
                         clanlist.sort(predicateBy('donations', 'descending'));
