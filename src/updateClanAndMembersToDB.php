@@ -1,6 +1,6 @@
 <?php
 
-require_once '../src/config.php';
+require_once 'config.php';
 
 $url_clan = 'https://api.clashofclans.com/v1/clans/'.urlencode($clantag);
 

@@ -2,3 +2,4 @@
 cd "$(dirname "$0")"
 chmod 777 data/
 php update.php
+php updateClanAndMembersToDB.php
