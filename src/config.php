@@ -8,7 +8,13 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // put your own clash tag here
-$clantag = '#2PCCRLYP';
+$clantag = '';
 
 // put your own api key here
 $token = '';
+
+// put your own MySQL server details here
+$servername = "localhost";
+$username = "";
+$password = "";
+$dbname = "";
