@@ -1,6 +1,7 @@
 ﻿<!doctype html>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +9,43 @@
     <link rel="icon" href="" id="icon">
 
     <!-- AngularJS used to update player info -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4="
+        crossorigin="anonymous"></script>
 
     <!--Required for bootstrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
     <!--Required for chartJS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ="
+        crossorigin="anonymous"></script>
 
     <style>
         @font-face {
             font-family: 'supercell-Magic-Font';
             src: url('./fonts/Supercell-magic-webfont.ttf');
         }
-        html{
+
+        html {
             width: 100%;
         }
 
         /* Uncomment all (incl h4 h5 h6) to use supercell font instead */
-        body{
+
+        body {
             /* font-family: supercell-Magic-Font; */
             /* font-size: 0.85rem; */
             text-rendering: geometricPrecision;
             width: 100%;
         }
+
         /* h4{
             font-size: 1.2rem;
             color: rgb(0, 10, 104);
@@ -45,7 +56,8 @@
         h6{
             font-size: 1rem;
         } */
-        .container-grid{
+
+        .container-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             grid-gap: 10px;
@@ -55,14 +67,14 @@
             padding-right: 5px;
         }
 
-        @media (min-width:320px)  {
-            .grid-row{
+        @media (min-width:320px) {
+            .grid-row {
                 grid-column: 1 / span 12;
             }
-            .grid-row-half_left{
+            .grid-row-half_left {
                 grid-column: 1 / span 12;
             }
-            .grid-row-half_right{
+            .grid-row-half_right {
                 grid-column: 1 / span 12;
             }
             .footer {
@@ -77,16 +89,23 @@
                 line-height: 60px;
             }
         }
-        @media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */ }
-        @media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
-        @media (min-width:801px)  {
-            .grid-row{
+
+        @media (min-width:480px) {
+            /* smartphones, Android phones, landscape iPhone */
+        }
+
+        @media (min-width:600px) {
+            /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+        }
+
+        @media (min-width:801px) {
+            .grid-row {
                 grid-column: 2 / span 10;
             }
-            .grid-row-half_left{
+            .grid-row-half_left {
                 grid-column: 2 / span 5;
             }
-            .grid-row-half_right{
+            .grid-row-half_right {
                 grid-column: 7 / span 5;
             }
             .footer {
@@ -103,22 +122,34 @@
                 line-height: 60px;
             }
         }
-        @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
-        @media (min-width:1281px) { /* hi-res laptops and desktops */ }
+
+        @media (min-width:1025px) {
+            /* big landscape tablets, laptops, and desktops */
+        }
+
+        @media (min-width:1281px) {
+            /* hi-res laptops and desktops */
+        }
     </style>
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img ng-src="{{clan.badgeUrls.medium}}" height="35px"/><span>{{clan.name}}</span></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#">
+            <img ng-src="{{clan.badgeUrls.medium}}" height="35px" />
+            <span>{{clan.name}}</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <!-- KIV this
                     <li class="nav-item">
@@ -151,10 +182,14 @@
 
         <div class="grid-row">
             <br>
-            <div style="float:right">Updated On: <span class="text-muted">{{updatedOn}}</span></div>
+            <div style="float:right">Updated On:
+                <span class="text-muted">{{updatedOn}}</span>
+            </div>
             <h4>About Us</h4>
             <div>
-                <h5>Location: <span style="color:rgb(34, 139, 69)">{{clan.location.name}}</span> </h5>
+                <h5>Location:
+                    <span style="color:rgb(34, 139, 69)">{{clan.location.name}}</span>
+                </h5>
                 {{clan.description}}
             </div>
             <hr />
@@ -171,22 +206,25 @@
             <hr>
             <div>
                 <canvas id="all_time_donations"></canvas>
-            </div>   
+            </div>
         </div>
 
-        
+
         <div class="grid-row-half_right">
             <h4>Individual Player Stats</h4>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect_player">Clan members</label>
+                    <label class="input-group-text" for="inputGroupSelect_player">Clan members</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect_player" selectpicker data-live-search="true" ng-model="selectedUser" ng-options="user as user.name for user in data"  ng-change="changeUser(selectedUser)" >
+                <select class="custom-select" id="inputGroupSelect_player" selectpicker data-live-search="true" ng-model="selectedUser" ng-options="user as user.name for user in data"
+                    ng-change="changeUser(selectedUser)">
                 </select>
             </div>
             <div style="font-size:1rem;">
-                <img ng-if="selectedUser.league" ng-src="{{selectedUser.league.iconUrls.small}}" height="50px" style="float:left"/>
-                <div><b>{{selectedUser.name}}</b></div>
+                <img ng-if="selectedUser.league" ng-src="{{selectedUser.league.iconUrls.small}}" height="50px" style="float:left" />
+                <div>
+                    <b>{{selectedUser.name}}</b>
+                </div>
                 <div>
                     <!--This makes the first letter uppercase-->
                     <h6 style="color:rgb(34, 139, 69)">{{selectedUser.role[0].toUpperCase() + selectedUser.role.substring(1)}}</h6>
@@ -196,72 +234,91 @@
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-gStats-tab" data-toggle="pill" href="#pills-gStats" role="tab" aria-controls="pills-gStats" aria-selected="true">General Stats</a>
+                    <a class="nav-link active" id="pills-gStats-tab" data-toggle="pill" href="#pills-gStats" role="tab" aria-controls="pills-gStats"
+                        aria-selected="true">General Stats</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-trophies-tab" data-toggle="pill" href="#pills-trophies" role="tab" aria-controls="pills-trophies" aria-selected="false">Trophies</a>
+                    <a class="nav-link" id="pills-trophies-tab" data-toggle="pill" href="#pills-trophies" role="tab" aria-controls="pills-trophies"
+                        aria-selected="false">Trophies</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-achievements-tab" data-toggle="pill" href="#pills-achievements" role="tab" aria-controls="pills-achievements" aria-selected="false">Achievements</a>
+                    <a class="nav-link" id="pills-achievements-tab" data-toggle="pill" href="#pills-achievements" role="tab" aria-controls="pills-achievements"
+                        aria-selected="false">Achievements</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-troops-tab" data-toggle="pill" href="#pills-troops" role="tab" aria-controls="pills-troops" aria-selected="false">Troops</a>
+                    <a class="nav-link" id="pills-troops-tab" data-toggle="pill" href="#pills-troops" role="tab" aria-controls="pills-troops"
+                        aria-selected="false">Troops</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-spells-tab" data-toggle="pill" href="#pills-spells" role="tab" aria-controls="pills-spells" aria-selected="false">Spells</a>
+                    <a class="nav-link" id="pills-spells-tab" data-toggle="pill" href="#pills-spells" role="tab" aria-controls="pills-spells"
+                        aria-selected="false">Spells</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-activity-tab" data-toggle="pill" href="#pills-activity" role="tab" aria-controls="pills-activity"
+                        aria-selected="false">Activity</a>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-gStats" role="tabpanel" aria-labelledby="pills-gStats-tab">
                     <div>
-                        Donation Ratio: 
+                        Donation Ratio:
                         <span class="text-muted" ng-if="((selectedUser.donations != 0) && (selectedUser.donationsReceived!= 0))">{{Math.round((selectedUser.donations)/(selectedUser.donationsReceived) * 100) / 100 }}</span>
                         <span class="text-muted" ng-if="!((selectedUser.donations != 0) && (selectedUser.donationsReceived!= 0))">Unable to calculate</span>
                     </div>
                     <canvas id="user_donations"></canvas>
                     <div>
-                        <h4>Town Hall <span class="text-muted">TH {{selectedUser.townHallLevel}}</span></h4>
+                        <h4>Town Hall
+                            <span class="text-muted">TH {{selectedUser.townHallLevel}}</span>
+                        </h4>
                     </div>
                     <div>
-                        ⭐️War Stars: <span class="text-muted">{{selectedUser.warStars}}</span> 
+                        ⭐️War Stars:
+                        <span class="text-muted">{{selectedUser.warStars}}</span>
                     </div>
                     <div>
-                        🏆 Trophies: <span class="text-muted">{{selectedUser.trophies}}</span>
+                        🏆 Trophies:
+                        <span class="text-muted">{{selectedUser.trophies}}</span>
                     </div>
                     <br>
                     <h5>Heroes</h5>
                     <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'home'">
-                        {{hero.name}}: <span class="text-muted">Lv {{hero.level}}</span>
+                        {{hero.name}}:
+                        <span class="text-muted">Lv {{hero.level}}</span>
                     </div>
                     <hr>
                     <div>
-                        <h4>Builder Base <span class="text-muted">BH {{selectedUser.builderHallLevel}}</span></h4>
+                        <h4>Builder Base
+                            <span class="text-muted">BH {{selectedUser.builderHallLevel}}</span>
+                        </h4>
                     </div>
                     <div>
-                        Versus Battle Wins: <span class="text-muted">{{selectedUser.versusBattleWins}}</span>
+                        Versus Battle Wins:
+                        <span class="text-muted">{{selectedUser.versusBattleWins}}</span>
                     </div>
                     <div>
-                        🏆 Versus Trophies <span class="text-muted">{{selectedUser.versusTrophies}}</span>
+                        🏆 Versus Trophies
+                        <span class="text-muted">{{selectedUser.versusTrophies}}</span>
                     </div>
                     <br>
                     <h5>Heroes</h5>
-                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'builderBase'">  
-                        {{hero.name}}: <span class="text-muted">Lv {{hero.level}} {{$index}}</span>
+                    <div ng-repeat="hero in selectedUser.heroes" ng-if="hero.village == 'builderBase'">
+                        {{hero.name}}:
+                        <span class="text-muted">Lv {{hero.level}} {{$index}}</span>
                     </div>
                     <hr>
                 </div>
                 <div class="tab-pane fade" id="pills-trophies" role="tabpanel" aria-labelledby="pills-trophies-tab">
-                        <canvas id="user_stats"></canvas>
+                    <canvas id="user_stats"></canvas>
                 </div>
                 <div class="tab-pane fade" id="pills-achievements" role="tabpanel" aria-labelledby="pills-achievements-tab">
                     <h6>Incomplete Achievements</h6>
                     <div ng-repeat="achievment in selectedUser.achievements">
                         <div ng-if="!isCompleted(achievment)">
                             <b>{{achievment.name}}</b>
-                            <br>
-                            {{achievment.info}}
+                            <br> {{achievment.info}}
                             <div class="progress">
-                                <div class="progress-bar" ng-class="{'bg-danger': achievment.value/achievment.target*100 < 25, 'bg-warning': achievment.value/achievment.target*100 > 75}" role="progressbar" style="width:{{achievment.value/achievment.target*100}}%">
+                                <div class="progress-bar" ng-class="{'bg-danger': achievment.value/achievment.target*100 < 25, 'bg-warning': achievment.value/achievment.target*100 > 75}"
+                                    role="progressbar" style="width:{{achievment.value/achievment.target*100}}%">
                                     {{ Math.round(achievment.value/achievment.target*100) }}%
                                 </div>
                             </div>
@@ -273,8 +330,7 @@
                     <div ng-repeat="achievment in selectedUser.achievements">
                         <div ng-if="!isCompleted(achievment)">
                             <b>{{achievment.name}}</b>
-                            <br>
-                            {{achievment.info}}
+                            <br> {{achievment.info}}
                             <div class="progress">
                                 <div class="progress-bar bg-success" role="progressbar" style="width:100%">
                                     100%
@@ -288,8 +344,8 @@
                     <h6>Home Village</h6>
                     <div ng-repeat="troop in selectedUser.troops">
                         <div ng-if="troop.village == 'home'">
-                            <b>{{troop.name}}</b> <br>
-                            Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
+                            <b>{{troop.name}}</b>
+                            <br> Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%"></div>
                             </div>
@@ -300,11 +356,11 @@
                     <h6>Builder Base</h6>
                     <div ng-repeat="troop in selectedUser.troops">
                         <div ng-if="troop.village == 'builderBase'">
-                            <b>{{troop.name}}</b> <br>
-                            Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
+                            <b>{{troop.name}}</b>
+                            <br> Current Level: {{troop.level}} / Max: {{troop.maxLevel}}
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width:{{troop.level/troop.maxLevel*100}}%">
-                                        
+
                                 </div>
                             </div>
                         </div>
@@ -314,14 +370,21 @@
                     <h6>Home Village</h6>
                     <div ng-repeat="spell in selectedUser.spells">
                         <div ng-if="spell.village == 'home'">
-                            <b>{{spell.name}}</b> <br>
-                            Current Level: {{spell.level}} / Max: {{spell.maxLevel}}
+                            <b>{{spell.name}}</b>
+                            <br> Current Level: {{spell.level}} / Max: {{spell.maxLevel}}
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width:{{spell.level/spell.maxLevel*100}}%"></div>
                             </div>
                             <br>
                         </div>
                     </div>
+                    <hr>
+                </div>
+                <div class="tab-pane fade" id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab">
+                    <div id="activityError" style="display: none;">Could not retrieve data</div>
+                    <img id="loading" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" style="display: none;"/>
+                    <canvas id="activityChart"></canvas>
+                    <div id="activityInfo">Activity is calculated from the recordable statistics of each player. (Attacks, donations, etc...)</div>
                     <hr>
                 </div>
             </div>
@@ -332,15 +395,20 @@
     <div class="footer-spacer"></div>
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">Clash Dash v2.1 - View this project on <a href="https://github.com/EdwinChua/clash"><i class="fa fa-github" style="font-size:1.5rem"></i> Github</a></span>
-            <span style="float:right"><button type="button" class="btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg" >Disclaimer</button></span>
+            <span class="text-muted">Clash Dash v2.1 - View this project on
+                <a href="https://github.com/EdwinChua/clash">
+                    <i class="fa fa-github" style="font-size:1.5rem"></i> Github</a>
+            </span>
+            <span style="float:right">
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg">Disclaimer</button>
+            </span>
         </div>
     </footer>
-    
+
     <!--Disclaimer Modal-->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Disclaimer (From SuperCell)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -349,9 +417,8 @@
                 </div>
                 <div class="modal-body">
                     <p class="text-muted">
-                        This content is not affiliated with, endorsed, sponsored, or 
-                        specifically approved by Supercell and Supercell is not responsible for it. 
-                        For more information see Supercell's Fan Content Policy: 
+                        This content is not affiliated with, endorsed, sponsored, or specifically approved by Supercell and Supercell is not responsible
+                        for it. For more information see Supercell's Fan Content Policy:
                         <a href="http://supercell.com/fan-content-policy">supercell.com/fan-content-policy</a>.
                     </p>
                 </div>
@@ -364,7 +431,7 @@
         // Chart.defaults.global.defaultFontSize = 9;
 
         let app = angular.module('myApp', []);
-        app.controller('myCtrl', function($scope) {
+        app.controller('myCtrl', function ($scope) {
             $scope.Math = window.Math;
             $scope.selectedUser = "";
             $scope.data = [];
@@ -388,16 +455,16 @@
                 ).then(function () {
                     $("#icon").attr('href', $scope.clan["badgeUrls"]["small"]);
 
-                    let chartlabel_currentDonations_temp = extractArray(clanlist,"name");
-                    let chartdata_currentDonations_temp = extractArray(clanlist,"donations");
-                    let chartdata_currentDonationsReceived_temp = extractArray(clanlist,"donationsReceived");
+                    let chartlabel_currentDonations_temp = extractArray(clanlist, "name");
+                    let chartdata_currentDonations_temp = extractArray(clanlist, "donations");
+                    let chartdata_currentDonationsReceived_temp = extractArray(clanlist, "donationsReceived");
 
                     let chartlabel_currentDonations = [];
                     let chartdata_currentDonations = [];
                     let chartdata_currentDonationsReceived = [];
-                    
-                    for (let i in chartlabel_currentDonations_temp){
-                        if (!(chartdata_currentDonations_temp[i] === 0 && chartdata_currentDonationsReceived_temp[i] === 0)){
+
+                    for (let i in chartlabel_currentDonations_temp) {
+                        if (!(chartdata_currentDonations_temp[i] === 0 && chartdata_currentDonationsReceived_temp[i] === 0)) {
                             chartlabel_currentDonations.push(chartlabel_currentDonations_temp[i]);
                             chartdata_currentDonations.push(chartdata_currentDonations_temp[i]);
                             chartdata_currentDonationsReceived.push(chartdata_currentDonationsReceived_temp[i]);
@@ -437,10 +504,10 @@
                                 xAxes: [{
                                     ticks: {
                                         beginAtZero: this.beginzero,
-                                        callback: function(value) {
-                                            if (value.length <=10)
+                                        callback: function (value) {
+                                            if (value.length <= 10)
                                                 return value;
-                                            else 
+                                            else
                                                 return value.substr(0, 7) + "...";//truncate
                                         }
                                     }
@@ -455,20 +522,20 @@
                                 enabled: true,
                                 mode: 'label',
                                 callbacks: {
-                                    title: function(tooltipItems, data) {
+                                    title: function (tooltipItems, data) {
                                         let idx = tooltipItems[0].index;
                                         return data.labels[idx];
                                     },
-                                    label: function(tooltipItems, data) {
-                                        return data.datasets[tooltipItems.datasetIndex].label + ": "+ tooltipItems.yLabel;
+                                    label: function (tooltipItems, data) {
+                                        return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel;
                                     }
                                 }
                             },
-                            onClick: function(c,i){
-                                try{
+                            onClick: function (c, i) {
+                                try {
                                     e = i[0];
                                     $scope.changeUserFromChart(this.data.labels[e._index]);
-                                } catch (e){
+                                } catch (e) {
                                     console.log("click: not on bar");
                                     //ignore misclicks
                                 }
@@ -491,10 +558,10 @@
                     } catch (err) {
                         all_time_DonationsArr.push("");
                     }
-                    all_time_DonationsArr.sort(predicateBy("donation","descending"));
+                    all_time_DonationsArr.sort(predicateBy("donation", "descending"));
 
-                    let chartlabel_all_time_Donations = extractArray(all_time_DonationsArr,"name");
-                    let chartdata_all_time_Donations = extractArray(all_time_DonationsArr,"donation");
+                    let chartlabel_all_time_Donations = extractArray(all_time_DonationsArr, "name");
+                    let chartdata_all_time_Donations = extractArray(all_time_DonationsArr, "donation");
 
                     let ctxAllTimeDonations = document.getElementById("all_time_donations").getContext('2d');
                     chart_all_time_Donations = new Chart(ctxAllTimeDonations, {
@@ -522,10 +589,10 @@
 
                                     ticks: {
                                         beginAtZero: this.beginzero,
-                                        callback: function(value) {
-                                            if (value.length <=10)
+                                        callback: function (value) {
+                                            if (value.length <= 10)
                                                 return value;
-                                            else 
+                                            else
                                                 return value.substr(0, 7) + "...";//truncate
                                         }
                                     }
@@ -540,29 +607,29 @@
                                 enabled: true,
                                 mode: 'label',
                                 callbacks: {
-                                    title: function(tooltipItems, data) {
+                                    title: function (tooltipItems, data) {
                                         let idx = tooltipItems[0].index;
                                         return data.labels[idx];
                                     },
-                                    label: function(tooltipItems, data) {
-                                        return data.datasets[tooltipItems.datasetIndex].label + ": "+ tooltipItems.yLabel;
+                                    label: function (tooltipItems, data) {
+                                        return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel;
                                     }
                                 }
                             },
-                            onClick: function(c,i){
-                                try{
+                            onClick: function (c, i) {
+                                try {
                                     e = i[0];
                                     $scope.changeUserFromChart(this.data.labels[e._index]);
-                                } catch (e){
+                                } catch (e) {
                                     console.log("click: not on bar");
                                     //ignore misclicks
                                 }
                             },
                         }
                     });
-                    playerlist.sort(function(a, b){
-                        if(a.name < b.name) return -1;
-                        if(a.name > b.name) return 1;
+                    playerlist.sort(function (a, b) {
+                        if (a.name < b.name) return -1;
+                        if (a.name > b.name) return 1;
                         return 0;
                     });
                     $scope.data = playerlist;
@@ -571,21 +638,22 @@
                         $scope.$digest();
                     }
 
-                    
+
                 })
             });
-            
+
             let chart_user_stats;
             let chart_user_donations;
+            let chart_user_activity;
 
-            $scope.changeUserFromChart = function(userName){
-                let user = $scope.data.find(function(element) {
+            $scope.changeUserFromChart = function (userName) {
+                let user = $scope.data.find(function (element) {
                     return element.name === userName;
                 });
                 $scope.changeUser(user);
             };
 
-            $scope.changeUser = function(user){
+            $scope.changeUser = function (user) {
                 $scope.selectedUser = user;
                 let ctxUserStats = document.getElementById("user_stats").getContext('2d');
                 if (chart_user_stats)
@@ -594,7 +662,7 @@
                 chart_user_stats = new Chart(ctxUserStats, {
                     type: 'bar',
                     data: {
-                        labels: ["Trophies","Versus Trophies"],
+                        labels: ["Trophies", "Versus Trophies"],
                         datasets: [
                             {
                                 label: 'Current',
@@ -683,21 +751,87 @@
 
                     }
                 });
+
+                var label = [];
+                var value = [];
+                var bgColor = ['rgba(255, 99, 132, 0.2)'];
+                var borderColor = ['rgba(255,99,132,1)'];
+                for (var i = 0; i <= 23; i++) {
+                    if (i < 10){
+                        i = "0" + i.toString();
+                    }
+                    label.push(i + ":00hrs");
+                    value.push(0);
+                    // bgColor.push('rgba(255, 99, 132, 0.2)');
+                    // borderColor.push('rgba(255,99,132,1)');
+                }
+                $('#loading').css('display','initial');
+                $('#activityError').css('display','none');
+                $('#activityInfo').css('display','initial');
+                let ctxActivityChart = document.getElementById("activityChart").getContext('2d');
+                console.log(ctxActivityChart);
+                if (chart_user_activity)
+                    chart_user_activity.destroy();
+                
+                $.ajax({
+                    url: "./src/getUserActivity.php?pid=" + encodeURIComponent($scope.selectedUser.tag),
+                    headers: {},
+                    data: {},
+                    method: "GET"
+                }).done(
+                    function (data) {
+                        for (var i in data) {
+                            var index = new Date(data[i]['timestamp'] * 1000).getHours();
+                            var activity = data[i]['activityCount'] == null ? 0 : parseInt(data[i]['activityCount']);
+                            if (activity > 1)
+                                value[index] = value[index] + activity;
+                        }
+                        $('#loading').css('display','none');
+                        chart_user_activity = new Chart(ctxActivityChart, {
+                            type: 'line',
+                            data: {
+                                labels: label,
+                                datasets: [{
+                                    label: 'Activity level',
+                                    data: value,
+                                    backgroundColor: bgColor,
+                                    borderColor: borderColor,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+
+                ).fail(function (data, textStatus, jqXHR) {
+                    $('#loading').css('display','none');
+                    $('#activityInfo').css('display','none');
+                    $('#activityError').css('display','initial');
+                });
+
                 if ($scope.$root.$$phase !== '$apply' && $scope.$root.$$phase !== '$digest') {
                     $scope.$digest();
                 }
             };
 
-            $scope.isCompleted = function(achievement){
+            $scope.isCompleted = function (achievement) {
                 return achievement.value >= achievement.target;
             };
 
-            function extractArray(array,string){
+            function extractArray(array, string) {
                 let returnArray = [];
-                for (let i in array){
-                    try{
-                    returnArray.push(array[i][string]);
-                    }catch(e){
+                for (let i in array) {
+                    try {
+                        returnArray.push(array[i][string]);
+                    } catch (e) {
                         returnArray.push("");
                     }
                 }
@@ -730,4 +864,5 @@
     </script>
 
 </body>
+
 </html>

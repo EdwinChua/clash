@@ -1,0 +1,97 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Warriors</title>
+    <link rel="icon" href="" id="icon">
+
+    <!-- AngularJS used to update player info -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4="
+        crossorigin="anonymous"></script>
+
+    <!--Required for bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+    <!--Required for chartJS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>This is sample user activity page</h1>
+    <div style="max-width: 50%;max-height:50%">
+        <canvas id="activityChart"></canvas>
+    </div>
+    <script>
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var pid = url.searchParams.get("pid");
+
+        var label = [];
+        var value = [];
+        var bgColor = [];
+        var borderColor = [];
+        for (var i = 0; i <= 23; i++) {
+            label.push(i + ":00hrs");
+            value.push(0);
+            bgColor.push('rgba(255, 99, 132, 0.2)');
+            borderColor.push('rgba(255,99,132,1)');
+        }
+
+        $.ajax({
+            url: "./src/getUserActivity.php?pid=" + encodeURIComponent(pid),
+            headers: {},
+            data: {},
+            method: "GET"
+        }).done(
+            function (data) {
+                for (var i in data) {
+                    var index = new Date(data[i]['timestamp']*1000).getHours();
+                    var activity = data[i]['activityCount'] == null ? 0 : parseInt(data[i]['activityCount']);
+                    if (activity > 1)
+                        value[index] = value[index] + activity;
+                }
+                var ctx = document.getElementById("activityChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: label,
+                        datasets: [{
+                            label: 'Activity level',
+                            data: value,
+                            backgroundColor: bgColor,
+                            borderColor: borderColor,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+        ).fail(function (data, textStatus, jqXHR) {
+
+        });
+    </script>
+
+</body>
+
+</html>
